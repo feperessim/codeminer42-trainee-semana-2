@@ -1,10 +1,10 @@
 # codeminer42-trainee-semana-2
 
 ## Table of Contents
-* [General info] (#general-info)
-* [Technologies] (#technologies)
-* [Setup] (#setup)
-* [Using and testing] (#using-and-testing)
+* [General info](#general-info)
+* [Technologies](#technologies)
+* [Setup](#setup)
+* [Using and testing](#using-and-testing)
 
 ## General info
 
@@ -17,16 +17,21 @@ The project was created with the following technologies:
 
 * Ruby Version Manager (RVM): rvm 1.29.12
 * Ruby Interpreter: ruby 3.1.0p0
-* Bundle:
-* Rspec:
+* Bundle: Bundler 2.3.5
+* Rspec: RSpec 3.10
+	- rspec-core 3.10.1
+	- rspec-expectations 3.10.2
+	- rspec-mocks 3.10.2
+	- rspec-support 3.10.3
+
 
 ## Setup
 To run this project you need to follow the following instructions:
 
 ### 1. Setting up the project locally
-* 1. Clone the repository locally;
-* 2. Navigate into the newly cloned repo and create a new directory named "games_logs_files"
-* 3. Download the file "games.log" into the newly created folder "games_logs_files".
+1. Clone the repository locally;
+2. Navigate into the newly cloned repo and create a new directory named "games_logs_files"
+3. Download the file "games.log" into the newly created folder "games_logs_files".
 
 #### 1.1. Instructions:
 ```console
@@ -39,11 +44,11 @@ foo@bar:~$ cd ..
 ```
 
 ### 2. Installing dependencies
-* 1. Install the Ruby Version Manager (RVM) version >= 1.29.12;
-* 2 . Install  Ruby Interpreter: ruby 3.1.0p0  with the RVM;
-* 3. Configure the command interpreter for recognizing the ruby install
-* 4. Install the dependency manager Bundle;
-* 5. Install the rspec dependency with Bundle.
+1. Install the Ruby Version Manager (RVM) version >= 1.29.12;
+2. Install  Ruby Interpreter: ruby 3.1.0p0  with the RVM;
+3. Configure the command interpreter for recognizing the ruby install
+4. Install the dependency manager Bundle;
+5. Install the rspec dependency with Bundle.
 
 ##### 2.1. Instructions for installing Ruby Version Manager RVM
 * 2.1.1.  Install GPG keys: 
@@ -55,8 +60,8 @@ foo@bar:~$ gpg2 --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37
 ```console
 foo@bar:~$ \curl -sSL https://get.rvm.io | bash -s stable
 ```
-* 2.1.3. Troubleshooting and further informations:
-  ** For Troubleshooting and further informations see: https://rvm.io/ 
+* 2.1.3. Troubleshooting and further informations
+For Troubleshooting and further informations see: https://rvm.io/ 
 
 
 
