@@ -15,9 +15,7 @@ class ParserGamesLogs
 
   def read_first_line()
     File.open(@filename_with_path, @mode) do |log_file|
-      log_file.each_line do |line|
-        return line
-      end
+      log_file.readline
     end
   end
 
