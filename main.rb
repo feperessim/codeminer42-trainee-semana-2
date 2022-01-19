@@ -6,10 +6,11 @@ def main()
   begin
     parser = ParserGamesLogs.new(filename_with_path)
   rescue
-    puts "Something went wrong."
+    puts "The class could not be instantiated because the file does not exist."
   else
-    print(parser.header_line) 
+    print(parser.read_first_line) 
   end
 end
+
 
 main()
