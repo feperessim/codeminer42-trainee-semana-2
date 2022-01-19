@@ -4,8 +4,6 @@ HEADER_PATTERN = "  0:00 -------------------------------------------------------
 
 describe 'main.rb' do
   it "Prints the first line of the file games.logs" do
-    expect {
-      main()
-      }.to output(HEADER_PATTERN).to_stdout
+    expect { main }.to output(HEADER_PATTERN).to_stdout
   end
 end
