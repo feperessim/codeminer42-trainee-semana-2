@@ -1,3 +1,13 @@
+# Ignore everything in the directory with the games.log file
+/games_logs_files/
+
+# Ignore Emacs backup files
+*~
+
+# Ruby files
+# This file was created using a ruby gitignore template directly on the github webpage.
+# Thus, the files and directories below were automatically added for ignoring.
+
 *.gem
 *.rbc
 /.config
