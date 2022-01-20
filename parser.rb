@@ -34,9 +34,7 @@ class ParserGamesLogs
 
   def count_lines()
     if file_exists
-      count = 0
-      File.foreach(@filename_with_path) { count += 1 }
-      return count
+      return File.foreach(@filename_with_path).count
     end
   end
 end
