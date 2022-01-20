@@ -1,3 +1,5 @@
+require 'json'
+
 class ParserGamesLogs
   def initialize(filename_with_path)
     @filename_with_path = filename_with_path
@@ -12,6 +14,22 @@ class ParserGamesLogs
         log_file.readline
       end
     end
+  end
+
+
+  def count_lines()
+    if file_exists?
+      count = 0
+      File.foreach(@filename_with_path) { count += 1 }
+      return count
+    end
+  end
+
+
+  def parse_file()
+    count = count_lines()
+    output_hash = {@filename_with_path => { "lines" => count}}
+    return output_hash.to_json
   end
 
 
