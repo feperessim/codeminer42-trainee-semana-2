@@ -4,24 +4,15 @@ class ParserGamesLogs
   def initialize(filename_with_path)
     @filename_with_path = filename_with_path
     @mode = 'r'
-    file_exists?()
+    file_exists()
   end
   
 
   def read_first_line()
-    if file_exists?
+    if file_exists
       File.open(@filename_with_path, @mode) do |log_file|
         log_file.readline
       end
-    end
-  end
-
-
-  def count_lines()
-    if file_exists?
-      count = 0
-      File.foreach(@filename_with_path) { count += 1 }
-      return count
     end
   end
 
@@ -35,8 +26,17 @@ class ParserGamesLogs
 
   private
   
-  def file_exists?()
+  def file_exists()
     raise Errno::ENOENT unless File.exist?(@filename_with_path)
     return true
+  end
+
+
+  def count_lines()
+    if file_exists
+      count = 0
+      File.foreach(@filename_with_path) { count += 1 }
+      return count
+    end
   end
 end
