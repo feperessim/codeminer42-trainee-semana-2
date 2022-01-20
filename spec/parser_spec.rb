@@ -31,7 +31,7 @@ describe ParserGamesLogs do
     expect {
       parser = ParserGamesLogs.new(FILENAME_WITH_PATH)
       json_parsed_file = JSON.parse(parser.parse_file())
-      expect(json_parsed_file).to include( "#{FILENAME_WITH_PATH}" => {"lines"=>5306})
+      expect(json_parsed_file).to include( "#{FILENAME_WITH_PATH}" => {"lines"=> TOTAL_NUMBER_OF_LINES})
     }.not_to raise_error
   end
 end
