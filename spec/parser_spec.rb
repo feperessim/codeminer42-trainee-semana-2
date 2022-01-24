@@ -9,35 +9,31 @@ TOTAL_NUMBER_OF_LINES = 5306
 
 
 describe ParserGamesLogs do
-  context "When the file exists" do
-    it "Instantiates the class." do
+  context "When attempt to create the object" do
+    it "Instantiates the class if the file exists." do
       expect {ParserGamesLogs.new(FILENAME_WITH_PATH)}.not_to raise_error
     end
-
-    describe '#read_first_line' do
-      it "Checks whether the first line match with the one in the 'games.log' if the file exists" do
-        expect {
-          parser = ParserGamesLogs.new(FILENAME_WITH_PATH)
-          first_line = parser.read_first_line()
-          expect(first_line).to eq(FIRST_LINE)          
-        }.not_to raise_error
-      end
-    end
-
-    describe '#parse_file' do
-      it "Expects a json object with contents when parsing the file if it exists." do
-        expect {
-          parser = ParserGamesLogs.new(FILENAME_WITH_PATH)
-          json_parsed_file = JSON.parse(parser.parse_file())
-          expect(json_parsed_file).to include( "#{FILENAME_WITH_PATH}" => {"lines"=> TOTAL_NUMBER_OF_LINES})
-        }.not_to raise_error
-      end
-    end
-  end
-
-  context "When the file does not exist" do
-    it "Raises an Errno::ENOENT" do
+    
+    it "Raises an Errno::ENOENT if the file does not exist" do
       expect {ParserGamesLogs.new(WRONG_FILENAME_WITH_PATH)}.to raise_error(Errno::ENOENT)
     end
   end
+  
+  describe '#read_first_line' do
+    it "Returns the first line of the file 'games.log'" do
+      parser = ParserGamesLogs.new(FILENAME_WITH_PATH)
+      first_line = parser.read_first_line()
+      expect(first_line).to eq(FIRST_LINE)
+    end
+  end
+  
+  describe '#parse_file' do
+    it "Returns a json object after parses the file." do
+      parser = ParserGamesLogs.new(FILENAME_WITH_PATH)
+      json_parsed_file = JSON.parse(parser.parse_file())
+      expect(json_parsed_file).to include( "#{FILENAME_WITH_PATH}" => {"lines"=> TOTAL_NUMBER_OF_LINES})
+    end
+  end
 end
+
+

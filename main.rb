@@ -8,7 +8,7 @@ def main()
   rescue
     puts "The class could not be instantiated because the file does not exist."
   else
-    print(parser.read_first_line)
+    puts(parser.read_first_line)
     puts(JSON.pretty_generate(JSON.parse(parser.parse_file())))
   end
 end
