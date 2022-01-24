@@ -1,6 +1,7 @@
 require_relative "../parser.rb"
 require 'json'
 
+
 FILENAME_WITH_PATH = "games_logs_files/games.log"
 WRONG_FILENAME_WITH_PATH = "wrong/path/games.log"
 FIRST_LINE = "  0:00 ------------------------------------------------------------\n"
@@ -10,7 +11,7 @@ TOTAL_NUMBER_OF_LINES = 5306
 describe ParserGamesLogs do
   context "When the file exists" do
     it "Instantiates the class." do
-      expect {parser = ParserGamesLogs.new(FILENAME_WITH_PATH)}.not_to raise_error
+      expect {ParserGamesLogs.new(FILENAME_WITH_PATH)}.not_to raise_error
     end
 
     describe '#read_first_line' do
@@ -36,7 +37,7 @@ describe ParserGamesLogs do
 
   context "When the file does not exist" do
     it "Raises an Errno::ENOENT" do
-      expect {parser = ParserGamesLogs.new(WRONG_FILENAME_WITH_PATH)}.to raise_error(Errno::ENOENT)
+      expect {ParserGamesLogs.new(WRONG_FILENAME_WITH_PATH)}.to raise_error(Errno::ENOENT)
     end
   end
 end
