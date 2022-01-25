@@ -10,7 +10,7 @@ describe ParserGamesLogs do
     end
 
 
-    let(:first_line) {"  0:00 ------------------------------------------------------------\n"}
+    let(:first_line) { "  0:00 ------------------------------------------------------------\n" }
     describe '#read_first_line' do
       it "Returns the first line of the file 'games.log'" do
         parser = ParserGamesLogs.new(filename_with_path)
