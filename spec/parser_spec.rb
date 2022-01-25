@@ -25,7 +25,7 @@ describe ParserGamesLogs do
       it "Returns a json object after parses the file." do
         parser = ParserGamesLogs.new(filename_with_path)
         json_parsed_file = JSON.parse(parser.parse_file)
-        expect(json_parsed_file).to include( "#{filename_with_path}" => {"lines"=> total_number_of_lines})
+        expect(json_parsed_file).to include("#{filename_with_path}" => { "lines"=> total_number_of_lines })
       end
     end
   end
