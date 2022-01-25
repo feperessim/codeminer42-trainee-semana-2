@@ -16,7 +16,7 @@ class ParserGamesLogs
 
 
   def parse_file
-    {@filename_with_path => { "lines" => count_lines}}.to_json
+    { @filename_with_path => { "lines" => count_lines } }.to_json
   end
   
   
