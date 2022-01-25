@@ -18,7 +18,9 @@ class ParserGamesLogs
   def parse_file
     { @filename_with_path => {
         "lines" => count_lines,
-        "players" => parse_players } }.to_json
+        "players" => parse_players,
+        "kills" => parse_kills,
+        "total_kills" => parse_total_kills } }.to_json
   end
   
   
@@ -48,5 +50,26 @@ class ParserGamesLogs
       end
     }
     return players.uniq
+  end
+
+  
+  def parse_kills
+    re_pattern_kill = /(?:Kill:.*:)(.*)(?:killed)/
+    players = parse_players
+    kills = players.each_with_object(Hash.new(0)){ |key, hash| hash[key] = 0}
+    
+    File.foreach(@filename_with_path) { |line|
+      line.match(re_pattern_kill) { |m|
+        m.captures.each {|player|
+          kills[player.strip] += 1 if player
+        }
+      }
+    }
+    kills
+  end
+
+  
+  def parse_total_kills
+    parse_kills.each_value.sum
   end
 end

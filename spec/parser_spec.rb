@@ -26,11 +26,17 @@ describe ParserGamesLogs do
                      "Fasano Again", "Oootsimo", "UnnamedPlayer", "Maluquinho", "Mal",  "Chessus!",
                      "Chessus"
                    ]}
+    let(:kills) {{
+                   "Isgalamido"=> 187, "<world>"=> 240, "Dono da Bola"=> 103, "Mocinha"=> 0, "Zeh"=> 158, "Assasinu Credi"=> 143,
+                  "Fasano Again"=> 0, "Oootsimo"=> 138, "UnnamedPlayer"=> 0, "Maluquinho"=> 1, "Mal"=> 57, "Chessus!"=> 0,
+                  "Chessus"=> 42
+                 }}
+    let(:total_kills) {1069}
     describe '#parse_file' do
       it "Returns a json object after parses the file." do
         parser = ParserGamesLogs.new(filename_with_path)
         json_parsed_file = JSON.parse(parser.parse_file)
-        expect(json_parsed_file).to include("#{filename_with_path}" => { "lines"=> total_number_of_lines, "players"=> players })
+        expect(json_parsed_file).to include("#{filename_with_path}" => { "lines"=> total_number_of_lines, "players"=> players, "kills"=> kills, "total_kills"=> total_kills })
       end
     end
   end
