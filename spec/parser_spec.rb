@@ -6,7 +6,7 @@ describe ParserGamesLogs do
   let(:filename_with_path) { "games_logs_files/games.log" }
   context "When the file exists" do
     it "Instantiates the class." do
-      expect {ParserGamesLogs.new(filename_with_path)}.not_to raise_error
+      expect { ParserGamesLogs.new(filename_with_path) }.not_to raise_error
     end
 
 
