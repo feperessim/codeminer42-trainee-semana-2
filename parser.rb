@@ -4,6 +4,7 @@ require 'json'
 class ParserGamesLogs 
   def initialize(filename_with_path)
     @filename_with_path = filename_with_path
+    @total_kills = 0
     raise Errno::ENOENT unless File.exist?(@filename_with_path)
   end
   
@@ -20,7 +21,7 @@ class ParserGamesLogs
         "lines" => count_lines,
         "players" => parse_players,
         "kills" => parse_kills,
-        "total_kills" => parse_total_kills } }.to_json
+        "total_kills" => @total_kills } }.to_json
   end
   
   
@@ -54,22 +55,23 @@ class ParserGamesLogs
 
   
   def parse_kills
-    re_pattern_kill = /(?:Kill:.*:)(.*)(?:killed)/
+    re_pattern_kill = /(?:Kill:.*:)(.*)(?:killed)(.*)(?:by)/
     players = parse_players
     kills = players.each_with_object(Hash.new(0)){ |key, hash| hash[key] = 0}
     
     File.foreach(@filename_with_path) { |line|
       line.match(re_pattern_kill) { |m|
-        m.captures.each {|player|
-          kills[player.strip] += 1 if player
-        }
+        if m.captures[0] && m.captures[1]
+          if m.captures[0].strip == "<world>"
+            kills[m.captures[1].strip] -= 1
+          else
+            kills[m.captures[0].strip] += 1
+          end
+          @total_kills += 1
+        end         
       }
     }
+    kills.delete("<world>")
     kills
-  end
-
-  
-  def parse_total_kills
-    parse_kills.each_value.sum
   end
 end

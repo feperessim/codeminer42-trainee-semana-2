@@ -27,9 +27,8 @@ describe ParserGamesLogs do
                      "Chessus"
                    ]}
     let(:kills) {{
-                   "Isgalamido"=> 187, "<world>"=> 240, "Dono da Bola"=> 103, "Mocinha"=> 0, "Zeh"=> 158, "Assasinu Credi"=> 143,
-                  "Fasano Again"=> 0, "Oootsimo"=> 138, "UnnamedPlayer"=> 0, "Maluquinho"=> 1, "Mal"=> 57, "Chessus!"=> 0,
-                  "Chessus"=> 42
+                   "Isgalamido"=> 147, "Dono da Bola"=> 63, "Mocinha"=> 0, "Zeh"=> 124, "Assasinu Credi"=> 111, "Fasano Again"=> 0,
+                   "Oootsimo"=> 114, "UnnamedPlayer"=> 0, "Maluquinho"=> 0, "Mal"=> -3, "Chessus!"=> 0, "Chessus"=> 33
                  }}
     let(:total_kills) {1069}
     describe '#parse_file' do
