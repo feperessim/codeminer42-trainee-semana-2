@@ -22,9 +22,8 @@ describe ParserGamesLogs do
 
     let(:total_number_of_lines) {5306}
     let(:players) {[
-                     "Isgalamido", "<world>", "Dono da Bola", "Mocinha", "Zeh", "Assasinu Credi",
-                     "Fasano Again", "Oootsimo", "UnnamedPlayer", "Maluquinho", "Mal",  "Chessus!",
-                     "Chessus"
+                     "Isgalamido", "Dono da Bola", "Mocinha", "Zeh", "Assasinu Credi", "Fasano Again", 
+                     "Oootsimo", "UnnamedPlayer", "Maluquinho", "Mal",  "Chessus!", "Chessus"
                    ]}
     describe '#parse_file' do
       it "Returns a json object after parses the file." do
