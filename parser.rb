@@ -35,6 +35,6 @@ class ParserGamesLogs
     File.readlines(@filename_with_path).flat_map do |line|
       next unless matches = line.match(re_pattern_players)
       matches.captures
-    end.compact.uniq
+    end.compact.uniq - ['<world>']
   end
 end
