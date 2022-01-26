@@ -30,14 +30,11 @@ class ParserGamesLogs
 
 
   def parse_players
-    re_pattern_kill = /(?:Kill:.*:) (.*) (?:killed) (.*) (?:by)/
-    re_pattern_client_user_info = /(?:ClientUserinfoChanged:.*n\\)(.*)(?:\\t\\0\\model.*)/
-    players = []
+    re_pattern_players = /(?:Kill:.*:) (.*) (?:killed) (.*) (?:by)|(?:ClientUserinfoChanged:.*n\\)(.*)(?:\\t\\0\\model.*)/
     
-    File.readlines(@filename_with_path).reduce([]) do |_, line|
-      next unless matches = line.match(re_pattern_kill) || matches = line.match(re_pattern_client_user_info)
-      matches.captures.each {|player| players.push(player) if player}
-    end
-    players.uniq
+    File.readlines(@filename_with_path).flat_map do |line|
+      next unless matches = line.match(re_pattern_players)
+      matches.captures
+    end.compact.uniq
   end
 end
