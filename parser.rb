@@ -3,8 +3,8 @@ require 'json'
 
 class ParserGamesLogs 
   def initialize(filename_with_path)
+    raise Errno::ENOENT unless File.exist?(filename_with_path)
     @filename_with_path = filename_with_path
-    raise Errno::ENOENT unless File.exist?(@filename_with_path)
   end
   
 
@@ -16,11 +16,12 @@ class ParserGamesLogs
 
 
   def parse_file
+    all_kills, total_kills = parse_kills
     { @filename_with_path => {
         "lines" => count_lines,
         "players" => parse_players,
-        "kills" => parse_kills,
-        "total_kills" => parse_total_kills } }.to_json
+        "kills" => all_kills,
+        "total_kills" => total_kills } }.to_json
   end
   
   
@@ -32,44 +33,30 @@ class ParserGamesLogs
 
 
   def parse_players
-    re_pattern_kill = /(?:Kill:.*:)(.*)(?:killed)(.*)(?:by)/
-    re_pattern_client_user_info = /(?:ClientUserinfoChanged:.*n\\)(.*)(?:\\t\\0\\model.*)/
-    players = []
+    re_pattern_players = /(?:Kill:.*:) (.*) (?:killed) (.*) (?:by)|(?:ClientUserinfoChanged:.*n\\)(.*)(?:\\t\\0\\model.*)/
     
-    File.foreach(@filename_with_path) { |line|
-      if line.match(re_pattern_kill) { |m|
-           m.captures.each {|player|
-             players.push(player.strip) if player
-           }
-         }
-      elsif line.match(re_pattern_client_user_info) { |m|
-              m.captures.each {|player|
-                players.push(player.strip) if player
-              }
-            }
-      end
-    }
-    return players.uniq
+    File.readlines(@filename_with_path).flat_map do |line|
+      next unless matches = line.match(re_pattern_players)
+      matches.captures
+    end.compact.uniq - ['<world>']
   end
 
   
   def parse_kills
-    re_pattern_kill = /(?:Kill:.*:)(.*)(?:killed)/
+    re_pattern_kill = /(?:Kill:.*:) (.*) (?:killed) (.*) (?:by)/
     players = parse_players
-    kills = players.each_with_object(Hash.new(0)){ |key, hash| hash[key] = 0}
+    initial_kills = Hash[players.map{|player| [player, 0]}]
     
-    File.foreach(@filename_with_path) { |line|
-      line.match(re_pattern_kill) { |m|
-        m.captures.each {|player|
-          kills[player.strip] += 1 if player
-        }
-      }
-    }
-    kills
+    File.readlines(@filename_with_path).reduce([initial_kills, 0]) do |(kills, total), line|
+      next [kills, total] unless matches = line.match(re_pattern_kill)
+      killer, killed = matches.captures
+      [kills.merge(counting_kill(killer, kills)), total + 1]
+    end
   end
 
   
-  def parse_total_kills
-    parse_kills.each_value.sum
+  def counting_kill(killer, kills)
+    return kills if killer == "<world>"
+    { killer => kills[killer] + 1 }
   end
 end

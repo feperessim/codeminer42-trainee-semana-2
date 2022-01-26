@@ -22,14 +22,12 @@ describe ParserGamesLogs do
 
     let(:total_number_of_lines) {5306}
     let(:players) {[
-                     "Isgalamido", "<world>", "Dono da Bola", "Mocinha", "Zeh", "Assasinu Credi",
-                     "Fasano Again", "Oootsimo", "UnnamedPlayer", "Maluquinho", "Mal",  "Chessus!",
-                     "Chessus"
+                     "Isgalamido", "Dono da Bola", "Mocinha", "Zeh", "Assasinu Credi", "Fasano Again",
+                     "Oootsimo", "UnnamedPlayer", "Maluquinho", "Mal",  "Chessus!", "Chessus"
                    ]}
     let(:kills) {{
-                   "Isgalamido"=> 187, "<world>"=> 240, "Dono da Bola"=> 103, "Mocinha"=> 0, "Zeh"=> 158, "Assasinu Credi"=> 143,
-                  "Fasano Again"=> 0, "Oootsimo"=> 138, "UnnamedPlayer"=> 0, "Maluquinho"=> 1, "Mal"=> 57, "Chessus!"=> 0,
-                  "Chessus"=> 42
+                   "Isgalamido"=> 187,  "Dono da Bola"=> 103, "Mocinha"=> 0, "Zeh"=> 158, "Assasinu Credi"=> 143, "Fasano Again"=> 0,
+                   "Oootsimo"=> 138, "UnnamedPlayer"=> 0, "Maluquinho"=> 1, "Mal"=> 57, "Chessus!"=> 0, "Chessus"=> 42
                  }}
     let(:total_kills) {1069}
     describe '#parse_file' do
