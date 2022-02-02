@@ -112,3 +112,8 @@ or
 ```console
 foo@bar:~$ rspec --format documentation
 ```
+
+* 3. Running RuboCop static code analyzer
+```console
+foo@bar:~$ bundle exec rubocop
+```
