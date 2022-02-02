@@ -3,6 +3,10 @@
 require 'json'
 
 class ParserGamesLogs
+  IGNORED_PLAYER = '<world>'
+  RE_PATTERN_PLAYERS = /(?:Kill:.*:) (.*) (?:killed) (.*) (?:by)|(?:ClientUserinfoChanged:.*n\\)(.*)(?:\\t\\0\\model.*)/
+  RE_PATTERN_KILL = /(?:Kill:.*:) (.*) (?:killed) (.*) (?:by)/
+
   def initialize(filename_with_path)
     raise Errno::ENOENT unless File.exist?(filename_with_path)
 
@@ -30,22 +34,19 @@ class ParserGamesLogs
   end
 
   def parse_players
-    re_pattern_players = /(?:Kill:.*:) (.*) (?:killed) (.*) (?:by)|(?:ClientUserinfoChanged:.*n\\)(.*)(?:\\t\\0\\model.*)/
-
     File.readlines(@filename_with_path).flat_map do |line|
-      next unless matches = line.match(re_pattern_players)
+      next unless matches = line.match(RE_PATTERN_PLAYERS)
 
       matches.captures
-    end.compact.uniq - ['<world>']
+    end.compact.uniq - [IGNORED_PLAYER]
   end
 
   def parse_kills
-    re_pattern_kill = /(?:Kill:.*:) (.*) (?:killed) (.*) (?:by)/
     players = parse_players
     initial_kills = Hash[players.map { |player| [player, 0] }]
 
     File.readlines(@filename_with_path).reduce([initial_kills, 0]) do |(kills, total), line|
-      next [kills, total] unless matches = line.match(re_pattern_kill)
+      next [kills, total] unless matches = line.match(RE_PATTERN_KILL)
 
       killer, killed = matches.captures
       [kills.merge(counting_kill(killer, killed, kills)), total + 1]
@@ -53,7 +54,7 @@ class ParserGamesLogs
   end
 
   def counting_kill(killer, killed, kills)
-    return { killed => kills[killed] - 1 } if killer == '<world>'
+    return { killed => kills[killed] - 1 } if killer == IGNORED_PLAYER
 
     { killer => kills[killer] + 1 }
   end
