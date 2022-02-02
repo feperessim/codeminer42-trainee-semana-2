@@ -3,9 +3,13 @@
 require 'json'
 
 class ParserGamesLogs
+  IGNORED_PLAYER = '<world>'
+  RE_PATTERN_PLAYERS = /(?:Kill:.*:) (.*) (?:killed) (.*) (?:by)|(?:ClientUserinfoChanged:.*n\\)(.*)(?:\\t\\0\\model.*)/
+
   def initialize(filename_with_path)
+    raise Errno::ENOENT unless File.exist?(filename_with_path)
+
     @filename_with_path = filename_with_path
-    raise Errno::ENOENT unless File.exist?(@filename_with_path)
   end
 
   def read_first_line
@@ -26,12 +30,10 @@ class ParserGamesLogs
   end
 
   def parse_players
-    re_pattern_players = /(?:Kill:.*:) (.*) (?:killed) (.*) (?:by)|(?:ClientUserinfoChanged:.*n\\)(.*)(?:\\t\\0\\model.*)/
-
     File.readlines(@filename_with_path).flat_map do |line|
-      next unless matches = line.match(re_pattern_players)
+      next unless matches = line.match(RE_PATTERN_PLAYERS)
 
       matches.captures
-    end.compact.uniq - ['<world>']
+    end.compact.uniq - [IGNORED_PLAYER]
   end
 end

@@ -4,7 +4,7 @@ require_relative '../parser'
 require 'json'
 
 describe ParserGamesLogs do
-  let(:filename_with_path) { 'games_logs_files/games.log' }
+  let(:filename_with_path) { 'spec/fixtures/test_file_games.log' }
 
   context 'When the file exists' do
     it 'Instantiates the class.' do
@@ -22,11 +22,10 @@ describe ParserGamesLogs do
     end
 
     describe '#parse_file' do
-      let(:total_number_of_lines) { 5306 }
+      let(:total_number_of_lines) { 33 }
       let(:players) do
         [
-          'Isgalamido', 'Dono da Bola', 'Mocinha', 'Zeh', 'Assasinu Credi', 'Fasano Again',
-          'Oootsimo', 'UnnamedPlayer', 'Maluquinho', 'Mal', 'Chessus!', 'Chessus'
+          'Isgalamido', 'Dono da Bola', 'Oootsimo', 'Assasinu Credi', 'Zeh', 'Mal'
         ]
       end
 
