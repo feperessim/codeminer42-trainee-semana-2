@@ -21,7 +21,7 @@ class ParserGamesLogs
     all_kills, total_kills = parse_kills
     { @filename_with_path => {
       'lines' => count_lines,
-      'players' => parse_players,
+      'players' => players,
       'kills' => all_kills,
       'total_kills' => total_kills
     } }.to_json
@@ -30,26 +30,27 @@ class ParserGamesLogs
   private
 
   def count_lines
-    File.readlines(@filename_with_path).length
+    file_read_lines.length
   end
 
-  def parse_players
-    File.readlines(@filename_with_path).flat_map do |line|
-      next unless matches = line.match(RE_PATTERN_PLAYERS)
+  def players
+    @players ||= file_read_lines.flat_map do |line|
+      next [] unless matches = line.match(RE_PATTERN_PLAYERS)
 
-      matches.captures
-    end.compact.uniq - [IGNORED_PLAYER]
+      matches.captures.compact
+    end.uniq - [IGNORED_PLAYER]
   end
 
   def parse_kills
-    players = parse_players
     initial_kills = Hash[players.map { |player| [player, 0] }]
 
-    File.readlines(@filename_with_path).reduce([initial_kills, 0]) do |(kills, total), line|
+    file_read_lines.reduce([initial_kills, 0]) do |(kills, total), line|
       next [kills, total] unless matches = line.match(RE_PATTERN_KILL)
 
-      killer, killed = matches.captures
-      [kills.merge(counting_kill(killer, killed, kills)), total + 1]
+      [
+        kills.merge(counting_kill(*matches.captures, kills)),
+        total + 1
+      ]
     end
   end
 
@@ -57,5 +58,9 @@ class ParserGamesLogs
     return { killed => kills[killed] - 1 } if killer == IGNORED_PLAYER
 
     { killer => kills[killer] + 1 }
+  end
+
+  def file_read_lines
+    @file_read_lines ||= File.readlines(@filename_with_path)
   end
 end
