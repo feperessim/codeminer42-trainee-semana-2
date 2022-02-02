@@ -10,8 +10,8 @@ describe ParserGamesLogs do
     end
 
 
-    let(:first_line) { "  0:00 ------------------------------------------------------------\n" }
     describe '#read_first_line' do
+      let(:first_line) { "  0:00 ------------------------------------------------------------\n" }
       it "Returns the first line of the file 'games.log'" do
         parser = ParserGamesLogs.new(filename_with_path)
         parser_first_line = parser.read_first_line
@@ -20,12 +20,12 @@ describe ParserGamesLogs do
     end
 
 
-    let(:total_number_of_lines) {5306}
-    let(:players) {[
-                     "Isgalamido", "Dono da Bola", "Mocinha", "Zeh", "Assasinu Credi", "Fasano Again", 
-                     "Oootsimo", "UnnamedPlayer", "Maluquinho", "Mal",  "Chessus!", "Chessus"
-                   ]}
     describe '#parse_file' do
+      let(:total_number_of_lines) {5306}
+      let(:players) {[
+                       "Isgalamido", "Dono da Bola", "Mocinha", "Zeh", "Assasinu Credi", "Fasano Again", 
+                       "Oootsimo", "UnnamedPlayer", "Maluquinho", "Mal",  "Chessus!", "Chessus"
+                     ]}
       it "Returns a json object after parses the file." do
         parser = ParserGamesLogs.new(filename_with_path)
         json_parsed_file = JSON.parse(parser.parse_file)
@@ -33,10 +33,10 @@ describe ParserGamesLogs do
       end
     end
   end
-
-
-  let(:wrong_filename_with_path) {"wrong/path/games.log"}
+  
+  
   context "When the file exists" do
+    let(:wrong_filename_with_path) {"wrong/path/games.log"}
     it "Raises an Errno::ENOENT." do
       expect {ParserGamesLogs.new(wrong_filename_with_path)}.to raise_error(Errno::ENOENT)
     end
