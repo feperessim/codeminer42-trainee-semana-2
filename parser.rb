@@ -14,7 +14,7 @@ class ParserGamesLogs
   end
 
   def read_first_line
-    File.open(@filename_with_path, &:readline)
+    file_read_lines.first
   end
 
   def parse_file
