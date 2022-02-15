@@ -15,9 +15,7 @@ describe ParserGamesLogs do
       let(:first_line) { "  0:00 ------------------------------------------------------------\n" }
 
       it "Returns the first line of the file 'games.log'" do
-        parser = ParserGamesLogs.new(filename_with_path)
-        parser_first_line = parser.read_first_line
-        expect(parser_first_line).to eq(first_line)
+        expect(ParserGamesLogs.new(filename_with_path).read_first_line).to eq(first_line)
       end
     end
 
