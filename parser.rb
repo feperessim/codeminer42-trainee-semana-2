@@ -47,13 +47,15 @@ class ParserGamesLogs
     file_read_lines.reduce([initial_kills, 0]) do |(kills, total), line|
       next [kills, total] unless matches = line.match(RE_PATTERN_KILL)
 
-      killer, = matches.captures
-      [kills.merge(counting_kill(killer, kills)), total + 1]
+      [
+        kills.merge(counting_kill(*matches.captures, kills)),
+        total + 1
+      ]
     end
   end
 
-  def counting_kill(killer, kills)
-    return kills if killer == IGNORED_PLAYER
+  def counting_kill(killer, killed, kills)
+    return { killed => kills[killed] - 1 } if killer == IGNORED_PLAYER
 
     { killer => kills[killer] + 1 }
   end

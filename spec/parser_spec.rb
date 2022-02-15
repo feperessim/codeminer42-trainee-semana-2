@@ -28,7 +28,7 @@ describe ParserGamesLogs do
       end
       let(:kills) do
         {
-          'Isgalamido' => 1, 'Dono da Bola' => 5, 'Oootsimo' => 3, 'Assasinu Credi' => 1, 'Zeh' => 2, 'Mal' => 0
+          'Isgalamido' => 0, 'Dono da Bola' => 4, 'Oootsimo' => 3, 'Assasinu Credi' => 1, 'Zeh' => 1, 'Mal' => -1
         }
       end
       let(:total_kills) { 16 }
